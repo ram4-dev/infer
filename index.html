@@ -219,6 +219,7 @@
       border-radius: 4px;
       background: var(--bg-well);
       overflow: hidden;
+      min-width: 0;
     }
 
     .terminal-bar {
@@ -249,17 +250,26 @@
 
     .terminal-body {
       padding: 1.25rem 1rem;
-      overflow-x: auto;
+      overflow-x: visible;
+      overflow-y: visible;
       font-family: "JetBrains Mono", monospace;
-      font-size: 0.75rem;
+      font-size: clamp(0.625rem, 2.4vw, 0.8125rem);
       line-height: 1.65;
+      max-width: 100%;
     }
 
     @media (min-width: 640px) {
       .terminal-body {
-        font-size: 0.8125rem;
         padding: 1.5rem 1.25rem;
       }
+    }
+
+    .terminal-body pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      max-width: 100%;
     }
 
     pre {
