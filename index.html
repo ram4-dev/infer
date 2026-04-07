@@ -762,15 +762,15 @@
           <div class="beta-counter-text">
             <p class="beta-label mono">Closed beta</p>
             <p id="beta-heading" class="beta-copy">
-              We are offering a closed beta for up to <strong>50</strong> hosts and users combined. First cohort only.
+              We are offering a closed beta with <strong>30</strong> spots for hosts and users combined. First cohort only. Each signup lowers the count.
             </p>
           </div>
           <div class="beta-counter-block">
             <div class="beta-counter-display" aria-live="polite" aria-atomic="true">
-              <span class="beta-counter-num" id="beta-counter-num">0</span>
-              <span class="beta-counter-max">/ 50</span>
+              <span class="beta-counter-num" id="beta-counter-num">30</span>
+              <span class="beta-counter-max">/ 30</span>
             </div>
-            <p class="beta-counter-caption mono">Cohort capacity</p>
+            <p class="beta-counter-caption mono">Spots left</p>
           </div>
         </div>
       </div>
@@ -912,24 +912,59 @@
 
   <script>
     (function () {
+      var BETA_MAX = 30;
+      var BETA_STORAGE_KEY = "infer_beta_spots_remaining";
+
+      function getRemaining() {
+        try {
+          var raw = localStorage.getItem(BETA_STORAGE_KEY);
+          if (raw === null) return BETA_MAX;
+          var n = parseInt(raw, 10);
+          if (isNaN(n) || n < 0 || n > BETA_MAX) return BETA_MAX;
+          return n;
+        } catch (e) {
+          return BETA_MAX;
+        }
+      }
+
+      function setRemaining(n) {
+        try {
+          var v = Math.max(0, Math.min(BETA_MAX, n));
+          localStorage.setItem(BETA_STORAGE_KEY, String(v));
+          return v;
+        } catch (e) {
+          return n;
+        }
+      }
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
       var counterEl = document.getElementById("beta-counter-num");
       if (counterEl) {
-        var target = 50;
-        var duration = 1600;
+        var target = getRemaining();
+        var duration = 1200;
         var start = null;
-        function easeOutCubic(t) {
-          return 1 - Math.pow(1 - t, 3);
-        }
         function step(ts) {
           if (start === null) start = ts;
           var elapsed = ts - start;
           var p = Math.min(1, elapsed / duration);
           var n = Math.round(easeOutCubic(p) * target);
           counterEl.textContent = String(n);
-          if (p < 1) requestAnimationFrame(step);
+          if (p < 1) {
+            requestAnimationFrame(step);
+          }
         }
         requestAnimationFrame(step);
       }
+
+      window.__inferBetaDecrement = function () {
+        var el = document.getElementById("beta-counter-num");
+        if (!el) return;
+        var next = setRemaining(getRemaining() - 1);
+        el.textContent = String(next);
+      };
     })();
 
     (function () {
@@ -970,6 +1005,9 @@
               successEl.classList.add("is-visible");
               form.reset();
               setRole("both");
+              if (typeof window.__inferBetaDecrement === "function") {
+                window.__inferBetaDecrement();
+              }
             } else {
               return res.json().then(function (data) {
                 throw new Error(data.error || "Submit failed");
