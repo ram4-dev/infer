@@ -608,6 +608,109 @@
       font-family: Inter, system-ui, sans-serif;
       font-size: 0.875rem;
     }
+
+    .beta-counter-section {
+      padding: 0 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .beta-counter-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 1.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: color-mix(in srgb, var(--surface) 85%, transparent);
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .beta-counter-card {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        text-align: left;
+        padding: 1.75rem 2rem;
+      }
+
+      .beta-counter-block {
+        flex-shrink: 0;
+        text-align: right;
+        align-items: flex-end;
+      }
+
+      .beta-counter-display {
+        justify-content: flex-end;
+      }
+    }
+
+    .beta-counter-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .beta-label {
+      margin: 0;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+    }
+
+    .beta-copy {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 36rem;
+    }
+
+    .beta-copy strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .beta-counter-display {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.25rem;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .beta-counter-num {
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      min-width: 2ch;
+      text-align: right;
+      transition: text-shadow var(--ease);
+    }
+
+    .beta-counter-max {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .beta-counter-caption {
+      margin: 0;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .beta-counter-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
   </style>
 </head>
 <body>
@@ -648,6 +751,26 @@
       <span class="token-plain">{</span><span class="token-key">"role"</span><span class="token-plain">: </span><span class="token-str">"user"</span><span class="token-plain">, </span><span class="token-key">"content"</span><span class="token-plain">: </span><span class="token-str">"Hola, necesito ayuda con un contrato"</span><span class="token-plain">}</span>
     <span class="token-plain">]</span>
   <span class="token-plain">}</span><span class="token-str">'</span><span class="cursor-blink" aria-hidden="true"></span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="beta-counter-section" aria-labelledby="beta-heading">
+      <div class="wrap">
+        <div class="beta-counter-card">
+          <div class="beta-counter-text">
+            <p class="beta-label mono">Closed beta</p>
+            <p id="beta-heading" class="beta-copy">
+              We are offering a closed beta for up to <strong>50</strong> hosts and users combined. First cohort only.
+            </p>
+          </div>
+          <div class="beta-counter-block">
+            <div class="beta-counter-display" aria-live="polite" aria-atomic="true">
+              <span class="beta-counter-num" id="beta-counter-num">0</span>
+              <span class="beta-counter-max">/ 50</span>
+            </div>
+            <p class="beta-counter-caption mono">Cohort capacity</p>
           </div>
         </div>
       </div>
@@ -788,6 +911,27 @@
   </footer>
 
   <script>
+    (function () {
+      var counterEl = document.getElementById("beta-counter-num");
+      if (counterEl) {
+        var target = 50;
+        var duration = 1600;
+        var start = null;
+        function easeOutCubic(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+        function step(ts) {
+          if (start === null) start = ts;
+          var elapsed = ts - start;
+          var p = Math.min(1, elapsed / duration);
+          var n = Math.round(easeOutCubic(p) * target);
+          counterEl.textContent = String(n);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+    })();
+
     (function () {
       var form = document.getElementById("waitlist-form");
       var successEl = document.getElementById("form-success");
