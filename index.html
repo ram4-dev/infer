@@ -57,7 +57,7 @@
       --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
       --font-body: Inter, system-ui, sans-serif;
       --font-code: "JetBrains Mono", ui-monospace, monospace;
-      --max: 1100px;
+      --max: 1240px;
       --ease: 0.2s ease;
       --radius-sm: 2px;
     }
@@ -150,18 +150,19 @@
       text-decoration: none;
     }
 
+    /* stitch: Inference Pulse — barra vertical en lugar de punto */
     .status-led {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      width: 2px;
+      height: 14px;
+      border-radius: 1px;
       background: var(--primary-container);
-      box-shadow: 0 0 0 2px var(--glow-green);
-      animation: led-pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 12px var(--glow-green);
+      animation: pulse-bar 2.2s ease-in-out infinite;
     }
 
-    @keyframes led-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.65; transform: scale(0.92); }
+    @keyframes pulse-bar {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50% { opacity: 0.55; filter: brightness(1.25); }
     }
 
     .nav-link {
@@ -194,10 +195,12 @@
     }
 
     .hero-title {
-      font-size: clamp(1.85rem, 5.2vw, 3rem);
-      margin: 0 0 1rem;
+      font-size: clamp(2rem, 5.5vw, 3.75rem);
+      margin: 0 0 1.25rem;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.045em;
+      line-height: 1.02;
+      text-transform: none;
     }
 
     .hero-accent {
@@ -220,11 +223,53 @@
     }
 
     .hero-pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      width: 2px;
+      height: 12px;
+      border-radius: 1px;
       background: var(--primary-container);
-      animation: led-pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--glow-green);
+      animation: pulse-bar 2.2s ease-in-out infinite;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 520px) {
+      .hero-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 0.9rem 1.4rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(59, 75, 55, 0.35);
+      color: var(--on-surface);
+      background: transparent;
+      text-decoration: none;
+      transition: border-color var(--ease), background var(--ease), color var(--ease), transform var(--ease);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(0, 255, 65, 0.35);
+      background: var(--surface-container-high);
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.98);
     }
 
     .hero-sub {
@@ -244,8 +289,9 @@
       border-bottom: none;
     }
 
-    .hero {
-      padding-top: clamp(3rem, 8vw, 5rem);
+    section.hero {
+      padding: clamp(3.5rem, 10vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+      border-bottom: 1px solid rgba(59, 75, 55, 0.1);
     }
 
     .section-label {
@@ -308,10 +354,15 @@
       inset: -6px;
       border-radius: 6px;
       background: linear-gradient(105deg, var(--glow-green), var(--glow-cyan));
-      opacity: 0.35;
-      filter: blur(18px);
+      opacity: 0.28;
+      filter: blur(20px);
       z-index: 0;
       pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .terminal-wrap:hover::before {
+      opacity: 0.48;
     }
 
     .terminal-wrap .terminal {
@@ -325,7 +376,7 @@
       background: var(--surface-container-lowest);
       overflow: hidden;
       min-width: 0;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
     }
 
     .terminal-bar {
@@ -368,6 +419,27 @@
       .terminal-body {
         padding: 1.5rem 1.25rem;
       }
+    }
+
+    .terminal-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 1.5rem;
+      padding: 0.65rem 1rem;
+      border-top: 1px solid rgba(59, 75, 55, 0.12);
+      background: rgba(42, 42, 42, 0.45);
+    }
+
+    .terminal-stat {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      letter-spacing: 0.02em;
+      color: var(--on-surface-variant);
+    }
+
+    .terminal-stat--accent {
+      color: var(--primary-container);
     }
 
     .terminal-body pre {
@@ -440,8 +512,12 @@
     }
 
     .column-block:hover {
-      border-color: var(--border-ghost-hover);
+      border-color: rgba(0, 255, 65, 0.28);
       background: var(--surface-container);
+    }
+
+    .column-block:nth-child(2):hover {
+      border-color: rgba(70, 234, 237, 0.28);
     }
 
     .column-block h3 {
@@ -451,11 +527,31 @@
     }
 
     .step {
-      margin-bottom: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.35rem;
     }
 
     .step:last-child {
       margin-bottom: 0;
+    }
+
+    .step-index {
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--primary-container);
+    }
+
+    .step-index--host {
+      color: var(--secondary);
+    }
+
+    .step-body {
+      min-width: 0;
     }
 
     .step strong {
@@ -511,6 +607,12 @@
       font-size: 0.875rem;
       line-height: 1.55;
       color: var(--on-surface-variant);
+    }
+
+    /* stitch: bandeja más profunda para “Why infer” */
+    .section-band {
+      background: var(--surface-container-lowest);
+      border-bottom: 1px solid rgba(59, 75, 55, 0.12);
     }
 
     /* Provider CTA */
@@ -892,7 +994,10 @@
           <p class="hero-sub">
             Skip the overhead of self-hosting. Access community-hosted models through an OpenAI-compatible API, with flexible model choice and better economics.
           </p>
-          <a class="btn" href="#waitlist">Join the beta &rarr;</a>
+          <div class="hero-actions">
+            <a class="btn" href="#waitlist">&gt; Join the beta</a>
+            <a class="btn-secondary" href="#how-it-works">How it works</a>
+          </div>
         </div>
         <div class="terminal-wrap">
           <div class="terminal" role="region" aria-label="Example API request">
@@ -900,7 +1005,7 @@
             <span class="dot dot--r" aria-hidden="true"></span>
             <span class="dot dot--y" aria-hidden="true"></span>
             <span class="dot dot--g" aria-hidden="true"></span>
-            <span class="terminal-title">bash</span>
+            <span class="terminal-title">bash — curl-inference.sh</span>
           </div>
           <div class="terminal-body">
             <pre><code><span class="token-cmd">curl</span> <span class="token-plain">https://infer.ram4.dev/v1/chat/completions \</span>
@@ -912,6 +1017,10 @@
       <span class="token-plain">{</span><span class="token-key">"role"</span><span class="token-plain">: </span><span class="token-str">"user"</span><span class="token-plain">, </span><span class="token-key">"content"</span><span class="token-plain">: </span><span class="token-str">"Hola, necesito ayuda con un contrato"</span><span class="token-plain">}</span>
     <span class="token-plain">]</span>
   <span class="token-plain">}</span><span class="token-str">'</span><span class="cursor-blink" aria-hidden="true"></span></code></pre>
+          </div>
+          <div class="terminal-footer" aria-hidden="true">
+            <span class="terminal-stat terminal-stat--accent">LATENCY: 142ms</span>
+            <span class="terminal-stat">TOKENS/SEC: 84.2</span>
           </div>
           </div>
         </div>
@@ -955,38 +1064,56 @@
           <div class="column-block">
             <h3>Use models</h3>
             <div class="step">
-              <strong>Pick a model</strong>
-              <p>Browse community-hosted models by specialty, latency, and price.</p>
+              <span class="step-index">01</span>
+              <div class="step-body">
+                <strong>Pick a model</strong>
+                <p>Browse community-hosted models by specialty, latency, and price.</p>
+              </div>
             </div>
             <div class="step">
-              <strong>Get your API key</strong>
-              <p>One key, access to the entire network.</p>
+              <span class="step-index">02</span>
+              <div class="step-body">
+                <strong>Get your API key</strong>
+                <p>One key, access to the entire network.</p>
+              </div>
             </div>
             <div class="step">
-              <strong>Drop-in replacement</strong>
-              <p>Change one line. Works with any OpenAI SDK.</p>
+              <span class="step-index">03</span>
+              <div class="step-body">
+                <strong>Drop-in replacement</strong>
+                <p>Change one line. Works with any OpenAI SDK.</p>
+              </div>
             </div>
           </div>
           <div class="column-block">
             <h3>Host models</h3>
             <div class="step">
-              <strong>Configure locally</strong>
-              <p>Run any model with Ollama, vLLM, or LocalAI.</p>
+              <span class="step-index step-index--host">01</span>
+              <div class="step-body">
+                <strong>Configure locally</strong>
+                <p>Run any model with Ollama, vLLM, or LocalAI.</p>
+              </div>
             </div>
             <div class="step">
-              <strong>Connect to infer</strong>
-              <p>Point your endpoint to our gateway. We handle routing.</p>
+              <span class="step-index step-index--host">02</span>
+              <div class="step-body">
+                <strong>Connect to infer</strong>
+                <p>Point your endpoint to our gateway. We handle routing.</p>
+              </div>
             </div>
             <div class="step">
-              <strong>Earn per token</strong>
-              <p>Get paid for every request your model serves.</p>
+              <span class="step-index step-index--host">03</span>
+              <div class="step-body">
+                <strong>Earn per token</strong>
+                <p>Get paid for every request your model serves.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="value-heading">
+    <section class="section-band" aria-labelledby="value-heading">
       <div class="wrap">
         <p class="section-label" id="value-heading">Why infer</p>
         <div class="feature-grid">
@@ -1072,10 +1199,10 @@
         </span>
       </div>
       <div class="footer-social">
-        <a href="https://x.com/ramacarnicer" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <a href="https://x.com/ram4_dev" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
-        <a href="https://github.com/RamiroCS-hub" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <a href="https://github.com/ram4-dev" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         </a>
       </div>
