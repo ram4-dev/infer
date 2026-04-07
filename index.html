@@ -10,31 +10,56 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
   <style>
     :root {
-      --bg: #0a0a0b;
-      --bg-well: #0e0e0e;
-      --surface: #131313;
-      --surface-high: #1c1c1c;
-      --border: #1a1a2e;
-      --border-hover: rgba(74, 222, 128, 0.35);
-      --text: #e8e8ea;
-      --text-muted: #8b8b95;
-      --accent: #4ade80;
-      --accent-dim: #22c55e;
-      --cyan: #22d3ee;
-      --code-string: #4ade80;
-      --code-key: #22d3ee;
-      --code-op: #6b7280;
-      --code-cmd: #a3e635;
-      --dot-red: #ff5f56;
-      --dot-amber: #ffbd2e;
-      --dot-green: #27c93f;
+      /* stitch / Sovereign Console tokens */
+      --background: #131313;
+      --surface-container-lowest: #0e0e0e;
+      --surface-container-low: #1c1b1b;
+      --surface-container: #201f1f;
+      --surface-container-high: #2a2a2a;
+      --surface-container-highest: #353534;
+      --on-surface: #e5e2e1;
+      --on-surface-variant: #b9ccb2;
+      --on-background: #e5e2e1;
+      --primary: #ebffe2;
+      --on-primary: #003907;
+      --primary-container: #00ff41;
+      --on-primary-container: #007117;
+      --primary-fixed: #72ff70;
+      --secondary: #46eaed;
+      --on-secondary: #003738;
+      --outline-variant: #3b4b37;
+      --border-ghost: rgba(59, 75, 55, 0.18);
+      --border-ghost-hover: rgba(0, 255, 65, 0.28);
+      --glow-green: rgba(0, 255, 65, 0.22);
+      --glow-cyan: rgba(70, 234, 237, 0.14);
+      --bg: var(--background);
+      --bg-well: var(--surface-container-lowest);
+      --surface: var(--background);
+      --surface-high: var(--surface-container-high);
+      --border: var(--border-ghost);
+      --border-hover: var(--border-ghost-hover);
+      --text: var(--on-surface);
+      --text-muted: var(--on-surface-variant);
+      --accent: var(--primary-container);
+      --cyan: var(--secondary);
+      --code-string: var(--primary-fixed);
+      --code-key: var(--secondary);
+      --code-op: #84967e;
+      --code-cmd: var(--secondary);
+      --dot-red: rgba(239, 68, 68, 0.35);
+      --dot-amber: rgba(234, 179, 8, 0.4);
+      --dot-green: rgba(0, 255, 65, 0.45);
+      --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+      --font-body: Inter, system-ui, sans-serif;
+      --font-code: "JetBrains Mono", ui-monospace, monospace;
       --max: 1100px;
       --ease: 0.2s ease;
+      --radius-sm: 2px;
     }
 
     *,
@@ -43,32 +68,34 @@
       box-sizing: border-box;
     }
 
+    ::selection {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
     html {
       scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      font-family: Inter, system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 1rem;
       line-height: 1.6;
       color: var(--text);
-      background-color: var(--bg);
+      background-color: var(--background);
       background-image:
-        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(34, 211, 238, 0.06), transparent 50%),
-        radial-gradient(circle at 20% 30%, rgba(74, 222, 128, 0.04), transparent 40%),
-        repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255, 255, 255, 0.012) 1px, rgba(255, 255, 255, 0.012) 2px),
-        repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255, 255, 255, 0.012) 1px, rgba(255, 255, 255, 0.012) 2px);
+        radial-gradient(ellipse 100% 60% at 50% 0%, rgba(0, 255, 65, 0.04), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, var(--glow-cyan), transparent 60%);
       min-height: 100vh;
     }
 
-    /* subtle noise overlay */
     body::before {
       content: "";
       pointer-events: none;
       position: fixed;
       inset: 0;
-      opacity: 0.035;
+      opacity: 0.04;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       z-index: 0;
     }
@@ -90,17 +117,17 @@
     }
 
     .mono {
-      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
     }
 
-    /* Nav */
+    /* Nav — stitch */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid var(--border);
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-ghost);
+      background: var(--background);
     }
 
     .nav-inner {
@@ -114,11 +141,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-weight: 700;
       font-size: 1.125rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+      color: var(--primary-container);
       text-decoration: none;
     }
 
@@ -126,8 +154,8 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+      background: var(--primary-container);
+      box-shadow: 0 0 0 2px var(--glow-green);
       animation: led-pulse 2s ease-in-out infinite;
     }
 
@@ -137,89 +165,167 @@
     }
 
     .nav-link {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.8125rem;
-      color: var(--text-muted);
+      font-weight: 600;
       text-decoration: none;
-      transition: color var(--ease);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--primary);
+      color: var(--on-primary);
+      transition: background var(--ease), transform var(--ease);
     }
 
     .nav-link:hover {
-      color: var(--accent);
+      background: var(--primary-fixed);
     }
 
-    /* Typography */
+    .nav-link:active {
+      transform: scale(0.98);
+    }
+
+    /* Typography — Space Grotesk (stitch) */
     h1, h2, h3, h4 {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-weight: 600;
       letter-spacing: -0.03em;
-      line-height: 1.15;
+      line-height: 1.12;
+      color: var(--on-background);
     }
 
     .hero-title {
-      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-size: clamp(1.85rem, 5.2vw, 3rem);
       margin: 0 0 1rem;
       font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-accent {
+      color: var(--primary-container);
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-high);
+      border: 1px solid var(--border-ghost);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+    }
+
+    .hero-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-container);
+      animation: led-pulse 2s ease-in-out infinite;
     }
 
     .hero-sub {
       margin: 0 0 2rem;
       max-width: 36rem;
-      color: var(--text-muted);
-      font-size: 1.0625rem;
+      color: var(--on-surface-variant);
+      font-size: 1rem;
+      line-height: 1.65;
     }
 
     section {
-      padding: 4.5rem 0;
-      border-bottom: 1px solid var(--border);
+      padding: clamp(3.5rem, 9vw, 5.5rem) 0;
+      border-bottom: 1px solid rgba(59, 75, 55, 0.14);
     }
 
     section:last-of-type {
       border-bottom: none;
     }
 
-    .section-label {
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
+    .hero {
+      padding-top: clamp(3rem, 8vw, 5rem);
     }
 
-    /* Buttons */
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-label::after {
+      content: "";
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      margin-top: 0.65rem;
+      border-radius: 1px;
+      background: var(--primary-container);
+    }
+
+    /* Buttons — primary_container glow (stitch) */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.875rem;
-      font-weight: 600;
-      padding: 0.875rem 1.5rem;
-      border-radius: 2px;
-      border: 1px solid transparent;
+      font-weight: 700;
+      padding: 0.9rem 1.6rem;
+      border-radius: var(--radius-sm);
+      border: none;
       cursor: pointer;
       text-decoration: none;
-      color: var(--bg);
-      background: var(--accent);
+      color: var(--on-primary-container);
+      background: var(--primary-container);
+      box-shadow: 0 0 20px var(--glow-green);
       transition: box-shadow var(--ease), background var(--ease), transform var(--ease);
     }
 
     .btn:hover {
-      box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 45%, transparent);
-      background: color-mix(in srgb, var(--accent) 92%, white);
+      background: var(--primary-fixed);
+      box-shadow: 0 0 28px rgba(0, 255, 65, 0.35);
     }
 
     .btn:active {
       transform: scale(0.98);
     }
 
-    /* Terminal / code */
+    /* Terminal — stitch: well + ghost border + optional glow */
+    .terminal-wrap {
+      position: relative;
+      min-width: 0;
+    }
+
+    .terminal-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 6px;
+      background: linear-gradient(105deg, var(--glow-green), var(--glow-cyan));
+      opacity: 0.35;
+      filter: blur(18px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .terminal-wrap .terminal {
+      position: relative;
+      z-index: 1;
+    }
+
     .terminal {
-      border: 1px solid var(--border);
+      border: 1px solid rgba(59, 75, 55, 0.22);
       border-radius: 4px;
-      background: var(--bg-well);
+      background: var(--surface-container-lowest);
       overflow: hidden;
       min-width: 0;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
     }
 
     .terminal-bar {
@@ -227,8 +333,8 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.65rem 1rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
+      border-bottom: 1px solid rgba(59, 75, 55, 0.12);
+      background: var(--surface-container);
     }
 
     .dot {
@@ -243,16 +349,16 @@
 
     .terminal-title {
       margin-left: 0.5rem;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.6875rem;
-      color: var(--text-muted);
+      color: rgba(185, 204, 178, 0.55);
     }
 
     .terminal-body {
       padding: 1.25rem 1rem;
       overflow-x: visible;
       overflow-y: visible;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-code);
       font-size: clamp(0.625rem, 2.4vw, 0.8125rem);
       line-height: 1.65;
       max-width: 100%;
@@ -281,7 +387,7 @@
     .token-str { color: var(--code-string); }
     .token-key { color: var(--code-key); }
     .token-op { color: var(--code-op); }
-    .token-plain { color: var(--text-muted); }
+    .token-plain { color: var(--on-surface-variant); }
 
     .cursor-blink {
       display: inline-block;
@@ -289,7 +395,7 @@
       height: 1.1em;
       margin-left: 2px;
       vertical-align: text-bottom;
-      background: var(--accent);
+      background: var(--primary-container);
       animation: blink 1s step-end infinite;
     }
 
@@ -327,20 +433,21 @@
 
     .column-block {
       padding: 2rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      border: 1px solid rgba(59, 75, 55, 0.2);
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-low);
       transition: border-color var(--ease), background var(--ease);
     }
 
     .column-block:hover {
-      border-color: var(--border-hover);
-      background: color-mix(in srgb, var(--surface-high) 90%, transparent);
+      border-color: var(--border-ghost-hover);
+      background: var(--surface-container);
     }
 
     .column-block h3 {
       margin: 0 0 1.5rem;
       font-size: 1.125rem;
+      color: var(--on-background);
     }
 
     .step {
@@ -353,16 +460,16 @@
 
     .step strong {
       display: block;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.875rem;
-      color: var(--text);
+      color: var(--on-surface);
       margin-bottom: 0.35rem;
     }
 
     .step p {
       margin: 0;
       font-size: 0.9375rem;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
     }
 
     /* Feature grid */
@@ -380,37 +487,38 @@
 
     .feature-card {
       padding: 1.75rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: var(--bg-well);
+      border: 1px solid rgba(59, 75, 55, 0.2);
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-high);
       transition: border-color var(--ease), box-shadow var(--ease);
     }
 
     .feature-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+      border-color: var(--border-ghost-hover);
+      box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.08);
     }
 
     .feature-card .label {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.8125rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--primary-container);
       margin: 0 0 0.5rem;
     }
 
     .feature-card p {
       margin: 0;
-      font-size: 0.9375rem;
-      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--on-surface-variant);
     }
 
     /* Provider CTA */
     .provider-box {
       padding: 2.5rem 2rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: var(--surface);
+      border: 1px solid rgba(59, 75, 55, 0.2);
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-low);
     }
 
     .provider-box h2 {
@@ -420,8 +528,10 @@
 
     .provider-box > p {
       margin: 0 0 1.75rem;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       max-width: 40rem;
+      font-size: 0.9375rem;
+      line-height: 1.65;
     }
 
     .mini-terminal .terminal-body {
@@ -432,29 +542,32 @@
     .form-section h2 {
       margin: 0 0 0.5rem;
       font-size: 1.75rem;
+      color: var(--on-background);
     }
 
     .form-section .subtitle {
       margin: 0 0 2rem;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
+      font-size: 1rem;
+      line-height: 1.55;
     }
 
     .form-card {
       max-width: 32rem;
       margin: 0 auto;
       padding: 2rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: var(--bg-well);
+      border: 1px solid rgba(59, 75, 55, 0.22);
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-lowest);
     }
 
     label {
       display: block;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.6875rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       margin-bottom: 0.5rem;
     }
 
@@ -462,20 +575,20 @@
     textarea {
       width: 100%;
       padding: 0.875rem 1rem;
-      font-family: Inter, system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.9375rem;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 2px;
+      color: var(--on-surface);
+      background: var(--surface-container-lowest);
+      border: 1px solid rgba(59, 75, 55, 0.25);
+      border-radius: var(--radius-sm);
       transition: border-color var(--ease), box-shadow var(--ease);
     }
 
     input:focus,
     textarea:focus {
       outline: none;
-      border-color: color-mix(in srgb, var(--cyan) 50%, var(--border));
-      box-shadow: 0 1px 0 0 var(--cyan);
+      border-color: rgba(70, 234, 237, 0.35);
+      box-shadow: 0 2px 0 0 var(--secondary);
     }
 
     textarea {
@@ -490,37 +603,38 @@
     }
 
     .pill {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.75rem;
       padding: 0.5rem 0.875rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
+      border: 1px solid rgba(59, 75, 55, 0.25);
+      border-radius: var(--radius-sm);
       background: transparent;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       cursor: pointer;
       transition: border-color var(--ease), color var(--ease), background var(--ease);
     }
 
     .pill:hover {
-      border-color: var(--border-hover);
-      color: var(--text);
+      border-color: var(--border-ghost-hover);
+      color: var(--on-surface);
+      background: var(--surface-container-high);
     }
 
     .pill[aria-pressed="true"] {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border-color: var(--primary-container);
+      color: var(--primary-fixed);
+      background: rgba(0, 255, 65, 0.08);
     }
 
     .form-success {
       display: none;
       margin-top: 1.25rem;
       padding: 1rem;
-      border: 1px solid var(--border-hover);
-      border-radius: 2px;
-      font-family: "JetBrains Mono", monospace;
+      border: 1px solid rgba(0, 255, 65, 0.25);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
       font-size: 0.8125rem;
-      color: var(--accent);
+      color: var(--primary-fixed);
       text-align: center;
     }
 
@@ -536,7 +650,8 @@
     /* Footer */
     .site-footer {
       padding: 2.5rem 0;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(59, 75, 55, 0.14);
+      background: var(--surface-container-lowest);
     }
 
     .footer-inner {
@@ -554,14 +669,19 @@
       }
     }
 
+    .footer-credit {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
     .footer-left a {
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       text-decoration: none;
       transition: color var(--ease);
     }
 
     .footer-left a:hover {
-      color: var(--accent);
+      color: var(--primary-container);
     }
 
     .footer-social {
@@ -571,12 +691,12 @@
     }
 
     .footer-social a {
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       transition: color var(--ease);
     }
 
     .footer-social a:hover {
-      color: var(--accent);
+      color: var(--primary-container);
     }
 
     .footer-social svg {
@@ -602,17 +722,17 @@
     }
 
     .role-fieldset legend {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-size: 0.6875rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       margin-bottom: 0.5rem;
       padding: 0;
     }
 
     .optional-hint {
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       font-weight: 400;
       text-transform: none;
       letter-spacing: normal;
@@ -622,37 +742,41 @@
 
     .problem-section {
       padding: 0 0 3rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(59, 75, 55, 0.14);
     }
 
     .problem-card {
       max-width: 42rem;
       margin: 0 auto;
+      padding: 1.75rem 1.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(59, 75, 55, 0.18);
+      background: var(--surface-container-low);
     }
 
     .problem-lead {
       margin: 0 0 1.125rem;
-      font-size: 1.0625rem;
+      font-size: 1rem;
       line-height: 1.65;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
     }
 
     .problem-solution {
       margin: 0;
-      font-size: 1.0625rem;
+      font-size: 1rem;
       line-height: 1.65;
-      color: var(--text);
+      color: var(--on-surface);
     }
 
     .problem-solution strong {
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
       font-weight: 600;
-      color: var(--accent);
+      color: var(--primary-container);
     }
 
     .beta-counter-section {
       padding: 0 0 3rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(59, 75, 55, 0.14);
     }
 
     .beta-counter-card {
@@ -660,9 +784,9 @@
       flex-direction: column;
       gap: 1.25rem;
       padding: 1.75rem 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: color-mix(in srgb, var(--surface) 85%, transparent);
+      border: 1px solid rgba(59, 75, 55, 0.2);
+      border-radius: var(--radius-sm);
+      background: var(--surface-container-high);
       text-align: center;
     }
 
@@ -695,10 +819,11 @@
 
     .beta-label {
       margin: 0;
+      font-family: var(--font-display);
       font-size: 0.6875rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--accent);
+      color: var(--primary);
     }
 
     .beta-counter-display {
@@ -706,14 +831,14 @@
       align-items: baseline;
       justify-content: center;
       gap: 0.25rem;
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-display);
     }
 
     .beta-counter-num {
       font-size: clamp(2.5rem, 8vw, 3.5rem);
       font-weight: 700;
       line-height: 1;
-      color: var(--accent);
+      color: var(--primary-container);
       font-variant-numeric: tabular-nums;
       min-width: 2ch;
       text-align: right;
@@ -722,7 +847,7 @@
 
     .beta-counter-max {
       font-size: 1.25rem;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
       font-weight: 500;
     }
 
@@ -731,7 +856,7 @@
       font-size: 0.6875rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--text-muted);
+      color: var(--on-surface-variant);
     }
 
     .beta-counter-block {
@@ -757,13 +882,20 @@
     <section class="hero" aria-labelledby="hero-heading">
       <div class="wrap hero-grid">
         <div>
-          <h1 id="hero-heading" class="hero-title">Use specialized open models like any other API.</h1>
+          <div class="hero-pill mono">
+            <span class="hero-pill-dot" aria-hidden="true"></span>
+            <span>Status: closed beta</span>
+          </div>
+          <h1 id="hero-heading" class="hero-title">
+            Use specialized <span class="hero-accent">open models</span> like any other API.
+          </h1>
           <p class="hero-sub">
             Skip the overhead of self-hosting. Access community-hosted models through an OpenAI-compatible API, with flexible model choice and better economics.
           </p>
           <a class="btn" href="#waitlist">Join the beta &rarr;</a>
         </div>
-        <div class="terminal" role="region" aria-label="Example API request">
+        <div class="terminal-wrap">
+          <div class="terminal" role="region" aria-label="Example API request">
           <div class="terminal-bar">
             <span class="dot dot--r" aria-hidden="true"></span>
             <span class="dot dot--y" aria-hidden="true"></span>
@@ -780,6 +912,7 @@
       <span class="token-plain">{</span><span class="token-key">"role"</span><span class="token-plain">: </span><span class="token-str">"user"</span><span class="token-plain">, </span><span class="token-key">"content"</span><span class="token-plain">: </span><span class="token-str">"Hola, necesito ayuda con un contrato"</span><span class="token-plain">}</span>
     <span class="token-plain">]</span>
   <span class="token-plain">}</span><span class="token-str">'</span><span class="cursor-blink" aria-hidden="true"></span></code></pre>
+          </div>
           </div>
         </div>
       </div>
@@ -817,7 +950,7 @@
 
     <section id="how-it-works" aria-labelledby="how-heading">
       <div class="wrap">
-        <p class="section-label mono" id="how-heading">How it works</p>
+        <p class="section-label" id="how-heading">How it works</p>
         <div class="two-col">
           <div class="column-block">
             <h3>Use models</h3>
@@ -855,7 +988,7 @@
 
     <section aria-labelledby="value-heading">
       <div class="wrap">
-        <p class="section-label mono" id="value-heading">Why infer</p>
+        <p class="section-label" id="value-heading">Why infer</p>
         <div class="feature-grid">
           <article class="feature-card">
             <p class="label">Works with your current stack</p>
@@ -934,7 +1067,7 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <div class="footer-left">
-        <span class="mono" style="font-size: 0.875rem; color: var(--text-muted);">
+        <span class="mono footer-credit">
           Built by <a href="https://ram4.dev" target="_blank" rel="noopener noreferrer">Rama</a>
         </span>
       </div>
