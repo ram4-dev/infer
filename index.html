@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>infer — Community-powered LLM inference</title>
-  <meta name="description" content="Community-powered LLM inference. Access specialized, community-hosted models through an OpenAI-compatible API. Cheaper than cloud providers." />
-  <meta property="og:title" content="infer — Community-powered LLM inference" />
-  <meta property="og:description" content="Access specialized, community-hosted models through an OpenAI-compatible API. 50-80% cheaper than cloud providers." />
+  <title>infer — Open inference, OpenAI-compatible API</title>
+  <meta name="description" content="Use specialized open models like any other API. Community-hosted models through an OpenAI-compatible API, flexible model choice, better economics." />
+  <meta property="og:title" content="infer — Open inference, OpenAI-compatible API" />
+  <meta property="og:description" content="Skip self-hosting overhead. Access community-hosted open models through an OpenAI-compatible API." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -620,6 +620,36 @@
       font-size: 0.875rem;
     }
 
+    .problem-section {
+      padding: 0 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-card {
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    .problem-lead {
+      margin: 0 0 1.125rem;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    .problem-solution {
+      margin: 0;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .problem-solution strong {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
     .beta-counter-section {
       padding: 0 0 3rem;
       border-bottom: 1px solid var(--border);
@@ -719,7 +749,7 @@
         infer
         <span class="status-led" aria-hidden="true"></span>
       </a>
-      <a class="nav-link" href="#waitlist">Join waitlist</a>
+      <a class="nav-link" href="#waitlist">Join the beta</a>
     </div>
   </header>
 
@@ -727,11 +757,11 @@
     <section class="hero" aria-labelledby="hero-heading">
       <div class="wrap hero-grid">
         <div>
-          <h1 id="hero-heading" class="hero-title">Community-powered LLM inference.</h1>
+          <h1 id="hero-heading" class="hero-title">Use specialized open models like any other API.</h1>
           <p class="hero-sub">
-            Access specialized, community-hosted models through an OpenAI-compatible API. 50-80% cheaper than cloud providers.
+            Skip the overhead of self-hosting. Access community-hosted models through an OpenAI-compatible API, with flexible model choice and better economics.
           </p>
-          <a class="btn" href="#waitlist">Get early access &rarr;</a>
+          <a class="btn" href="#waitlist">Join the beta &rarr;</a>
         </div>
         <div class="terminal" role="region" aria-label="Example API request">
           <div class="terminal-bar">
@@ -751,6 +781,19 @@
     <span class="token-plain">]</span>
   <span class="token-plain">}</span><span class="token-str">'</span><span class="cursor-blink" aria-hidden="true"></span></code></pre>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem-section" aria-labelledby="problem-heading">
+      <div class="wrap">
+        <div class="problem-card">
+          <p class="problem-lead" id="problem-heading">
+            Closed APIs are expensive. Self-hosting takes time. Raw GPU rental still leaves too much on you.
+          </p>
+          <p class="problem-solution">
+            <strong>infer</strong> gives you a simpler path to open inference: configured models, one API, less lock-in.
+          </p>
         </div>
       </div>
     </section>
@@ -815,20 +858,20 @@
         <p class="section-label mono" id="value-heading">Why infer</p>
         <div class="feature-grid">
           <article class="feature-card">
-            <p class="label">50-80% cheaper</p>
-            <p>Community hardware vs cloud data centers. No markup from hyperscalers.</p>
+            <p class="label">Works with your current stack</p>
+            <p>Keep your SDKs. Change your base URL and start.</p>
           </article>
           <article class="feature-card">
-            <p class="label">OpenAI-compatible</p>
-            <p>Same API, same SDKs. Change your base URL and you're live.</p>
+            <p class="label">Models for real use cases</p>
+            <p>Use specialized, fine-tuned, or augmented models beyond generic cloud defaults.</p>
           </article>
           <article class="feature-card">
-            <p class="label">Specialized models</p>
-            <p>Fine-tuned, RAG-powered, domain-specific configs you won't find on OpenAI or Anthropic.</p>
+            <p class="label">More control, less lock-in</p>
+            <p>Choose models and providers without rewriting your app around one vendor.</p>
           </article>
           <article class="feature-card">
-            <p class="label">No vendor lock-in</p>
-            <p>Switch models and providers freely. Your code stays the same.</p>
+            <p class="label">Better economics for open workloads</p>
+            <p>Use open inference at lower cost for many production and prototyping scenarios.</p>
           </article>
         </div>
       </div>
@@ -837,9 +880,9 @@
     <section aria-labelledby="provider-cta-heading">
       <div class="wrap">
         <div class="provider-box">
-          <h2 id="provider-cta-heading">You already run Ollama. Now get paid for it.</h2>
+          <h2 id="provider-cta-heading">Monetize the models you already run.</h2>
           <p>
-            Turn your idle RTX 4090, A100, or Apple Silicon into revenue. You configure the model, we send you traffic. No full hardware access needed — you control what runs.
+            Connect Ollama, vLLM, or LocalAI to infer. Keep control of your setup and get paid when your model serves traffic.
           </p>
           <div class="terminal mini-terminal" role="region" aria-label="Connect command example">
             <div class="terminal-bar">
@@ -859,8 +902,8 @@
 
     <section class="form-section" id="waitlist" aria-labelledby="waitlist-heading">
       <div class="wrap text-center">
-        <h2 id="waitlist-heading">Get early access</h2>
-        <p class="subtitle">We're onboarding the first providers and consumers now.</p>
+        <h2 id="waitlist-heading">Join the beta</h2>
+        <p class="subtitle">We're onboarding the first API users and model hosts now. Tell us your role and use case to get invited.</p>
         <div class="form-card">
           <form id="waitlist-form" action="https://formspree.io/f/mwvwapzy" method="POST">
             <input type="hidden" name="role" id="role-field" value="both" />
@@ -880,7 +923,7 @@
               <label for="use_case">What models or use cases interest you? <span class="optional-hint">(optional)</span></label>
               <textarea id="use_case" name="use_case" placeholder="e.g. Legal AI in Spanish, code generation, uncensored models..."></textarea>
             </div>
-            <button class="btn btn-block" type="submit">Join the waitlist</button>
+            <button class="btn btn-block" type="submit">Join the beta</button>
             <p id="form-success" class="form-success" role="status" aria-live="polite">You're in. We'll reach out soon.</p>
           </form>
         </div>
