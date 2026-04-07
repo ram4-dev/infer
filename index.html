@@ -762,13 +762,13 @@
           <div class="beta-counter-text">
             <p class="beta-label mono">Closed beta</p>
             <p id="beta-heading" class="beta-copy">
-              We are offering a closed beta with <strong>30</strong> spots for hosts and users combined. First cohort only. Each signup lowers the count.
+              We are offering a closed beta: <strong>30</strong> spots left out of <strong>50</strong> for hosts and users combined. First cohort only. Each signup lowers the count.
             </p>
           </div>
           <div class="beta-counter-block">
             <div class="beta-counter-display" aria-live="polite" aria-atomic="true">
               <span class="beta-counter-num" id="beta-counter-num">30</span>
-              <span class="beta-counter-max">/ 30</span>
+              <span class="beta-counter-max">/ 50</span>
             </div>
             <p class="beta-counter-caption mono">Spots left</p>
           </div>
@@ -912,24 +912,25 @@
 
   <script>
     (function () {
-      var BETA_MAX = 30;
+      var BETA_TOTAL = 50;
+      var BETA_DEFAULT_REMAINING = 30;
       var BETA_STORAGE_KEY = "infer_beta_spots_remaining";
 
       function getRemaining() {
         try {
           var raw = localStorage.getItem(BETA_STORAGE_KEY);
-          if (raw === null) return BETA_MAX;
+          if (raw === null) return BETA_DEFAULT_REMAINING;
           var n = parseInt(raw, 10);
-          if (isNaN(n) || n < 0 || n > BETA_MAX) return BETA_MAX;
+          if (isNaN(n) || n < 0 || n > BETA_TOTAL) return BETA_DEFAULT_REMAINING;
           return n;
         } catch (e) {
-          return BETA_MAX;
+          return BETA_DEFAULT_REMAINING;
         }
       }
 
       function setRemaining(n) {
         try {
-          var v = Math.max(0, Math.min(BETA_MAX, n));
+          var v = Math.max(0, Math.min(BETA_TOTAL, n));
           localStorage.setItem(BETA_STORAGE_KEY, String(v));
           return v;
         } catch (e) {
